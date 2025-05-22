@@ -61,7 +61,7 @@ const Navbar = () => {
           </Tooltip>
           
           <Tooltip title="GitHub Repository">
-            <IconButton color="inherit" href="https://github.com/yourusername/gradient-boost-visualization" target="_blank" rel="noopener noreferrer">
+            <IconButton color="inherit" href="https://github.com/jesservillines/gradient_boosting" target="_blank" rel="noopener noreferrer">
               <GitHubIcon />
             </IconButton>
           </Tooltip>
