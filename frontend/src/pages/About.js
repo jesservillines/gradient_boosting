@@ -13,7 +13,8 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 // Ensure you place your headshot image at frontend/public/headshot.jpg
-const profileImg = process.env.PUBLIC_URL + '/thusly_headshot.png';
+// Adjust extension to match actual file
+const profileImg = process.env.PUBLIC_URL + '/thusly_headshot.jpg';
 
 const About = () => {
   return (
