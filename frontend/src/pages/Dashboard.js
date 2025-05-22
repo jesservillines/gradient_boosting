@@ -17,6 +17,9 @@ import TuneIcon from '@mui/icons-material/Tune';
 import CompareIcon from '@mui/icons-material/Compare';
 import BookIcon from '@mui/icons-material/Book';
 
+// Path to hero background image placed in "frontend/public" directory.
+const heroImg = process.env.PUBLIC_URL + '/boosting_algo.png';
+
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -58,11 +61,17 @@ const Dashboard = () => {
       <Paper 
         elevation={3} 
         sx={{ 
-          p: 4, 
+          p: { xs: 4, md: 6 },
           mb: 4, 
           borderRadius: 2,
-          background: 'linear-gradient(45deg, #3f51b5 30%, #2196f3 90%)',
-          color: 'white'
+          minHeight: { xs: 300, md: 400 },
+          color: 'white',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${heroImg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       >
         <Typography variant="h3" gutterBottom>
