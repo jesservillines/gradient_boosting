@@ -57,7 +57,7 @@ function App() {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 3,
+            p: { xs: 1.5, sm: 2 },
             ml: { sm: sidebarOpen ? '240px' : 0 },
             mt: '64px',
           }}
