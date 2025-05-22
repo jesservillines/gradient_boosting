@@ -34,7 +34,8 @@ const Sidebar = () => {
     { text: 'Visualization', icon: <BarChartIcon />, path: '/visualization' },
     { text: 'Hyperparameter Tuning', icon: <TuneIcon />, path: '/hyperparameters' },
     { text: 'Algorithm Comparison', icon: <CompareIcon />, path: '/comparison' },
-    { text: 'Documentation', icon: <MenuBookIcon />, path: '/documentation' }
+    { text: 'Documentation', icon: <MenuBookIcon />, path: '/documentation' },
+    { text: 'About', icon: <MenuBookIcon />, path: '/about' }
   ];
   
   // Is the current path active

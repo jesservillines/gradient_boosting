@@ -16,6 +16,7 @@ import VisualizationPlayground from './pages/VisualizationPlayground';
 import HyperparameterTuning from './pages/HyperparameterTuning';
 import ComparisonPage from './pages/ComparisonPage';
 import Documentation from './pages/Documentation';
+import About from './pages/About'; // Added import statement for About component
 
 function App() {
   const darkMode = useSelector((state) => state.ui.darkMode);
@@ -68,6 +69,7 @@ function App() {
             <Route path="/hyperparameters" element={<HyperparameterTuning />} />
             <Route path="/comparison" element={<ComparisonPage />} />
             <Route path="/documentation" element={<Documentation />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </Box>
       </Box>
