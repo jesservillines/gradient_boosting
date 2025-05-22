@@ -12,8 +12,8 @@ import {
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
-// Replace with any profile image asset URL if desired
-const profileImg = 'https://avatars.githubusercontent.com/u/000000?v=4'; // fallback
+// Ensure you place your headshot image at frontend/public/headshot.jpg
+const profileImg = process.env.PUBLIC_URL + '/headshot.jpg';
 
 const About = () => {
   return (
@@ -74,8 +74,7 @@ const About = () => {
           </li>
           <li>
             <Typography variant="body1">
-              🎓 Master’s in Applied Statistics &amp; 7+ years applying ML across healthcare, finance, and
-              research domains.
+              📚 Over 7 years applying machine-learning across healthcare, finance and research domains.
             </Typography>
           </li>
           <li>
