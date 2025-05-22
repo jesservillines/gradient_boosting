@@ -20,6 +20,7 @@ import About from './pages/About'; // Added import statement for About component
 
 function App() {
   const darkMode = useSelector((state) => state.ui.darkMode);
+  const sidebarOpen = useSelector((state) => state.ui.sidebarOpen);
 
   // Memoize theme to avoid recreation on every render
   const theme = useMemo(
@@ -57,8 +58,7 @@ function App() {
           sx={{
             flexGrow: 1,
             p: 3,
-            width: { sm: `calc(100% - 240px)` },
-            ml: { sm: '240px' },
+            ml: { sm: sidebarOpen ? '240px' : 0 },
             mt: '64px',
           }}
         >
