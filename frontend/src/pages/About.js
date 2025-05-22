@@ -18,16 +18,16 @@ const profileImg = process.env.PUBLIC_URL + '/thusly_headshot.jpg';
 
 const About = () => {
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper sx={{ p: 4 }} elevation={1}>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} alignItems="center">
+    <Box sx={{ maxWidth: 800, mx: 'auto', px: { xs: 2, sm: 0 } }}>
+      <Paper sx={{ p: { xs: 2, sm: 4 } }} elevation={1}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 3 }} alignItems="center">
           <Avatar
             src={profileImg}
             alt="Jesse Villines"
-            sx={{ width: 120, height: 120 }}
+            sx={{ width: { xs: 100, sm: 120 }, height: { xs: 100, sm: 120 } }}
           />
           <Box>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: '1.8rem', sm: '2.125rem' } }}>
               Jesse Villines
             </Typography>
             <Typography variant="body1" paragraph>
@@ -60,7 +60,7 @@ const About = () => {
           </Box>
         </Stack>
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={{ my: { xs: 3, sm: 4 } }} />
 
         <Typography variant="h5" gutterBottom>
           Recent Highlights
