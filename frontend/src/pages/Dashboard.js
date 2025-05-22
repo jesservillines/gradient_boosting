@@ -156,7 +156,7 @@ const Dashboard = () => {
             <CardMedia
               component="img"
               height="140"
-              image="https://via.placeholder.com/600x140?text=XGBoost"
+              image={process.env.PUBLIC_URL + '/xgboost.png'}
               alt="XGBoost"
             />
             <CardContent>
@@ -182,7 +182,7 @@ const Dashboard = () => {
             <CardMedia
               component="img"
               height="140"
-              image="https://via.placeholder.com/600x140?text=LightGBM"
+              image={process.env.PUBLIC_URL + '/histboost.png'}
               alt="LightGBM"
             />
             <CardContent>
@@ -208,7 +208,7 @@ const Dashboard = () => {
             <CardMedia
               component="img"
               height="140"
-              image="https://via.placeholder.com/600x140?text=CatBoost"
+              image={process.env.PUBLIC_URL + '/catboost.png'}
               alt="CatBoost"
             />
             <CardContent>
