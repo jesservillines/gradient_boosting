@@ -38,6 +38,7 @@ const algorithmInfo = {
   xgboost: {
     name: 'XGBoost',
     fullName: 'eXtreme Gradient Boosting',
+    image: '/xgboost.png',
     color: '#3f51b5',
     year: '2014-2016',
     creator: 'Tianqi Chen',
@@ -119,6 +120,7 @@ const algorithmInfo = {
   lightgbm: {
     name: 'LightGBM',
     fullName: 'Light Gradient Boosting Machine',
+    image: '/histboost.png',
     color: '#4caf50',
     year: '2017',
     creator: 'Microsoft Research',
@@ -206,6 +208,7 @@ const algorithmInfo = {
   catboost: {
     name: 'CatBoost',
     fullName: 'Categorical Boosting',
+    image: '/catboost.png',
     color: '#ff9800',
     year: '2017-2018',
     creator: 'Yandex Research',
@@ -325,7 +328,26 @@ const AlgorithmExplorer = () => {
         >
           <Tab 
             value="xgboost" 
-            label="XGBoost" 
+            icon={
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box 
+                  sx={{ 
+                    width: 40, 
+                    height: 40, 
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    mb: 0.5 
+                  }}
+                >
+                  <img 
+                    src={algorithmInfo.xgboost.image} 
+                    alt="XGBoost" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  />
+                </Box>
+                <Typography variant="body2">XGBoost</Typography>
+              </Box>
+            }
             sx={{ 
               py: 2,
               borderBottom: selectedTab === 'xgboost' ? `4px solid ${algorithmInfo.xgboost.color}` : 'none' 
@@ -333,7 +355,26 @@ const AlgorithmExplorer = () => {
           />
           <Tab 
             value="lightgbm" 
-            label="LightGBM" 
+            icon={
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box 
+                  sx={{ 
+                    width: 40, 
+                    height: 40, 
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    mb: 0.5 
+                  }}
+                >
+                  <img 
+                    src={algorithmInfo.lightgbm.image} 
+                    alt="LightGBM" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  />
+                </Box>
+                <Typography variant="body2">LightGBM</Typography>
+              </Box>
+            }
             sx={{ 
               py: 2,
               borderBottom: selectedTab === 'lightgbm' ? `4px solid ${algorithmInfo.lightgbm.color}` : 'none' 
@@ -341,7 +382,26 @@ const AlgorithmExplorer = () => {
           />
           <Tab 
             value="catboost" 
-            label="CatBoost" 
+            icon={
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box 
+                  sx={{ 
+                    width: 40, 
+                    height: 40, 
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    mb: 0.5 
+                  }}
+                >
+                  <img 
+                    src={algorithmInfo.catboost.image} 
+                    alt="CatBoost" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  />
+                </Box>
+                <Typography variant="body2">CatBoost</Typography>
+              </Box>
+            }
             sx={{ 
               py: 2,
               borderBottom: selectedTab === 'catboost' ? `4px solid ${algorithmInfo.catboost.color}` : 'none' 
@@ -354,17 +414,42 @@ const AlgorithmExplorer = () => {
         {/* Algorithm Overview */}
         <Grid item xs={12}>
           <Paper sx={{ p: 3, mb: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h4" sx={{ color: currentAlgorithm.color, flexGrow: 1 }}>
-                {currentAlgorithm.name}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary">
-                {currentAlgorithm.fullName}
-              </Typography>
-            </Box>
-            <Typography variant="body1" paragraph>
-              {currentAlgorithm.description}
-            </Typography>
+            <Grid container spacing={2} sx={{ mb: 3 }}>
+              <Grid item xs={12} md={3}>
+                <Box 
+                  sx={{ 
+                    width: '100%',
+                    maxWidth: 200,
+                    height: 'auto',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    boxShadow: 2,
+                    mb: 2,
+                    mx: 'auto'
+                  }}
+                >
+                  <img 
+                    src={currentAlgorithm.image} 
+                    alt={`${currentAlgorithm.name} algorithm`}
+                    style={{ width: '100%', height: 'auto', display: 'block' }} 
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={9}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h4" sx={{ color: currentAlgorithm.color, flexGrow: 1 }}>
+                    {currentAlgorithm.name}
+                  </Typography>
+                  <Typography variant="subtitle1" color="text.secondary">
+                    {currentAlgorithm.fullName}
+                  </Typography>
+                </Box>
+                <Typography variant="body1" paragraph>
+                  {currentAlgorithm.description}
+                </Typography>
+              </Grid>
+            </Grid>
+
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <Card variant="outlined">
