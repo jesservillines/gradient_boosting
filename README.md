@@ -72,6 +72,6 @@ This application provides in-depth explanations and interactive visualizations o
 
 ## About the Author
 
-<img src="frontend/public/thusly_headshot.jpg" alt="Jesse Villines" width="150" align="right" />
+<img src="./frontend/public/thusly_headshot.jpg" alt="Jesse Villines" width="150" align="right" />
 
 **Jesse Villines** is a data scientist and machine-learning engineer specializing in gradient boosting and ensemble methods. He enjoys translating complex data into actionable insights and creating interactive visualizations. Connect on [LinkedIn](https://www.linkedin.com/in/jesse-villines/) and explore his [Kaggle gold-winning solution](https://www.kaggle.com/competitions/spinal-cord-injury-challenge-impairment-track/leaderboard).

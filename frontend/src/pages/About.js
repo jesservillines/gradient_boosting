@@ -12,8 +12,8 @@ import {
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
-// Ensure you place your headshot image at frontend/public/headshot.jpg
-// Adjust extension to match actual file
+// Headshot image used across README and app.
+// File located at: frontend/public/thusly_headshot.jpg
 const profileImg = process.env.PUBLIC_URL + '/thusly_headshot.jpg';
 
 const About = () => {

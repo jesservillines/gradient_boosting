@@ -207,7 +207,7 @@ const Dashboard = () => {
                 variant="outlined"
                 size="large"
                 startIcon={<Info />}
-                onClick={() => navigate('/algorithm-explorer')}
+                onClick={() => navigate('/documentation')}
                 sx={{
                   borderColor: 'white',
                   color: 'white',

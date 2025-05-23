@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Paper, CircularProgress } from '@mui/material';
+import Plot from 'react-plotly.js';
 
 /**
  * A component to visualize comparison between gradient boosting algorithms
@@ -11,6 +12,78 @@ const AlgorithmComparisonVisualization = ({
   comparisonData,
   isComparing
 }) => {
+  // Prepare data for Plotly visualization
+  const algorithmLabels = ['XGBoost', 'LightGBM', 'CatBoost'];
+  const algorithmColors = ['#FF6B6B', '#45B7D1', '#BB8FCE'];
+
+  let plotData = null;
+  let layout = {
+    margin: { t: 40, l: 60, r: 20, b: 60 },
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent',
+  };
+
+  if (aspect === 'accuracy') {
+    plotData = [
+      {
+        x: algorithmLabels,
+        y: [
+          comparisonData.xgboost,
+          comparisonData.lightgbm,
+          comparisonData.catboost,
+        ],
+        type: 'bar',
+        marker: { color: algorithmColors },
+      },
+    ];
+    layout.title = 'Accuracy';
+    layout.yaxis = { title: 'Accuracy', range: [0, 1] };
+  } else if (aspect === 'speed') {
+    plotData = [
+      {
+        x: algorithmLabels,
+        y: [
+          comparisonData.xgboost.training,
+          comparisonData.lightgbm.training,
+          comparisonData.catboost.training,
+        ],
+        name: 'Training (s)',
+        type: 'bar',
+        marker: { color: algorithmColors },
+      },
+      {
+        x: algorithmLabels,
+        y: [
+          comparisonData.xgboost.inference * 1000,
+          comparisonData.lightgbm.inference * 1000,
+          comparisonData.catboost.inference * 1000,
+        ],
+        name: 'Inference (ms)',
+        type: 'bar',
+        marker: { color: ['#FFA4A4', '#9FD6F2', '#D1B3F4'] },
+      },
+    ];
+    layout.barmode = 'group';
+    layout.title = 'Speed Comparison';
+    layout.yaxis = { title: 'Time' };
+    layout.showlegend = true;
+  } else if (aspect === 'memory') {
+    plotData = [
+      {
+        x: algorithmLabels,
+        y: [
+          comparisonData.xgboost,
+          comparisonData.lightgbm,
+          comparisonData.catboost,
+        ],
+        type: 'bar',
+        marker: { color: algorithmColors },
+      },
+    ];
+    layout.title = 'Memory Usage';
+    layout.yaxis = { title: 'Memory (MB)' };
+  }
+
   return (
     <Box className="visualization-container" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%', p: 3 }}>
       {isComparing ? (
@@ -36,24 +109,33 @@ const AlgorithmComparisonVisualization = ({
             Dataset: {dataset}
           </Typography>
           
-          <Paper 
-            elevation={0}
-            sx={{ 
-              width: '100%', 
-              height: 300, 
-              bgcolor: '#f5f5f5', 
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'center',
-              border: '1px dashed #aaa'
-            }}
-          >
-            <Typography variant="body1" color="text.secondary">
-              Interactive comparison visualization will be implemented here.
-              <br />
-              This will show a side-by-side comparison of XGBoost, LightGBM, and CatBoost for the selected aspect.
-            </Typography>
-          </Paper>
+          {plotData ? (
+            <Plot
+              data={plotData}
+              layout={layout}
+              style={{ width: '100%', height: 300 }}
+              config={{ displayModeBar: false, responsive: true }}
+            />
+          ) : (
+            <Paper
+              elevation={0}
+              sx={{
+                width: '100%',
+                height: 300,
+                bgcolor: '#f5f5f5',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: '1px dashed #aaa',
+              }}
+            >
+              <Typography variant="body1" color="text.secondary" textAlign="center">
+                Interactive comparison visualization will be implemented here.
+                <br />
+                Currently not available for selected aspect.
+              </Typography>
+            </Paper>
+          )}
           
           <Box sx={{ mt: 2, width: '100%' }}>
             <Typography variant="subtitle2" gutterBottom>

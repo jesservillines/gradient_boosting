@@ -1,5 +1,8 @@
 # Node artifacts
 node_modules/
+frontend/node_modules/
+backend/venv/
+venv/
 .env
 .DS_Store
 
@@ -17,8 +20,8 @@ npm-debug.log*
 .yarn-debug.log*
 
 # IDE/editor folders
-.vscode/
 .idea/
+.vscode/
 
 # OS files
 Thumbs.db
