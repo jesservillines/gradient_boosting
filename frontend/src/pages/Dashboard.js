@@ -1,235 +1,341 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box,
+  Container,
   Grid,
-  Typography,
   Card,
   CardContent,
-  CardMedia,
-  CardActionArea,
+  Typography,
+  Box,
   Button,
-  Paper,
-  Divider
+  Chip,
+  LinearProgress,
+  Fade,
+  Grow,
+  IconButton,
 } from '@mui/material';
-import ExploreIcon from '@mui/icons-material/Explore';
-import TuneIcon from '@mui/icons-material/Tune';
-import CompareIcon from '@mui/icons-material/Compare';
-import BookIcon from '@mui/icons-material/Book';
+import {
+  TrendingUp,
+  Speed,
+  CompareArrows,
+  Psychology,
+  PlayArrow,
+  Info,
+  Star,
+  GitHub,
+} from '@mui/icons-material';
+import { styled, keyframes } from '@mui/material/styles';
 
-// Path to hero background image placed in "frontend/public" directory.
-const heroImg = process.env.PUBLIC_URL + '/boosting_algo.png';
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
+
+const float = keyframes`
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+`;
+
+const HeroSection = styled(Box)(({ theme }) => ({
+  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+  color: 'white',
+  padding: theme.spacing(8, 0),
+  borderRadius: theme.spacing(2),
+  marginBottom: theme.spacing(4),
+  position: 'relative',
+  overflow: 'hidden',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: '-50%',
+    right: '-50%',
+    width: '200%',
+    height: '200%',
+    background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
+    animation: `${pulse} 4s ease-in-out infinite`,
+  },
+}));
+
+const AlgorithmCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  transition: 'all 0.3s ease-in-out',
+  cursor: 'pointer',
+  position: 'relative',
+  overflow: 'hidden',
+  '&:hover': {
+    transform: 'translateY(-8px)',
+    boxShadow: theme.shadows[8],
+    '& .algorithm-icon': {
+      animation: `${float} 2s ease-in-out infinite`,
+    },
+  },
+}));
+
+const FeatureCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  transition: 'transform 0.2s ease-in-out',
+  '&:hover': {
+    transform: 'scale(1.05)',
+  },
+}));
+
+const StatsChip = styled(Chip)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  fontWeight: 'bold',
+  '& .MuiChip-icon': {
+    color: theme.palette.primary.main,
+  },
+}));
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
 
-  // Feature cards for the dashboard
+  const algorithms = [
+    {
+      name: 'XGBoost',
+      description: 'Extreme Gradient Boosting with regularization',
+      icon: '🚀',
+      color: '#FF6B6B',
+      features: ['L1/L2 Regularization', 'Parallel Processing', 'Tree Pruning'],
+      performance: 92,
+    },
+    {
+      name: 'LightGBM',
+      description: 'Fast gradient boosting with leaf-wise growth',
+      icon: '⚡',
+      color: '#45B7D1',
+      features: ['Histogram-based', 'GPU Support', 'Categorical Features'],
+      performance: 95,
+    },
+    {
+      name: 'CatBoost',
+      description: 'Handles categorical features automatically',
+      icon: '🐱',
+      color: '#BB8FCE',
+      features: ['Ordered Boosting', 'GPU Training', 'Symmetric Trees'],
+      performance: 90,
+    },
+  ];
+
   const features = [
     {
       title: 'Algorithm Explorer',
-      description: 'Learn about XGBoost, LightGBM, and CatBoost algorithms through interactive explanations and visualizations.',
-      icon: <ExploreIcon sx={{ fontSize: 40 }} />,
-      path: '/algorithms',
-      color: '#3f51b5'
+      icon: <Psychology fontSize="large" />,
+      description: 'Deep dive into gradient boosting algorithms',
+      path: '/algorithm-explorer',
+      color: 'primary',
     },
     {
       title: 'Visualization Playground',
-      description: 'See gradient boosting in action with interactive visualizations of the training process and decision trees.',
-      icon: <BookIcon sx={{ fontSize: 40 }} />,
+      icon: <TrendingUp fontSize="large" />,
+      description: 'Interactive visualizations of the boosting process',
       path: '/visualization',
-      color: '#4caf50'
+      color: 'secondary',
     },
     {
       title: 'Hyperparameter Tuning',
-      description: 'Experiment with different hyperparameters and see how they affect model performance in real-time.',
-      icon: <TuneIcon sx={{ fontSize: 40 }} />,
-      path: '/hyperparameters',
-      color: '#ff9800'
+      icon: <Speed fontSize="large" />,
+      description: 'Optimize model performance with interactive tuning',
+      path: '/hyperparameter-tuning',
+      color: 'success',
     },
     {
       title: 'Algorithm Comparison',
-      description: 'Compare the performance and behavior of different gradient boosting implementations side by side.',
-      icon: <CompareIcon sx={{ fontSize: 40 }} />,
+      icon: <CompareArrows fontSize="large" />,
+      description: 'Compare different algorithms side by side',
       path: '/comparison',
-      color: '#f44336'
-    }
+      color: 'warning',
+    },
   ];
 
   return (
-    <Box>
-      {/* Hero Section */}
-      <Paper 
-        elevation={3} 
-        sx={{ 
-          p: { xs: 4, md: 6 },
-          mb: 4, 
-          borderRadius: 2,
-          minHeight: { xs: 300, md: 400 },
-          color: 'white',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${heroImg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
-        <Typography variant="h3" gutterBottom>
-          Gradient Boosting Visualization
-        </Typography>
-        <Typography variant="h6" paragraph>
-          An interactive application for understanding and visualizing gradient boosting algorithms
-        </Typography>
-        <Button 
-          variant="contained" 
-          color="secondary" 
-          size="large"
-          onClick={() => navigate('/algorithms')}
-          sx={{ mr: 2 }}
-        >
-          Explore Algorithms
-        </Button>
-        <Button 
-          variant="outlined" 
-          color="inherit" 
-          size="large"
-          onClick={() => navigate('/documentation')}
-        >
-          Documentation
-        </Button>
-      </Paper>
+    <Container maxWidth="lg">
+      <HeroSection>
+        <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <Fade in timeout={1000}>
+            <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
+              Gradient Boosting Visualizer
+            </Typography>
+          </Fade>
+          <Fade in timeout={1500}>
+            <Typography variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
+              Master the art of ensemble learning through interactive visualizations
+            </Typography>
+          </Fade>
+          <Fade in timeout={2000}>
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<PlayArrow />}
+                onClick={() => navigate('/visualization')}
+                sx={{
+                  backgroundColor: 'white',
+                  color: 'primary.main',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255,255,255,0.9)',
+                  },
+                }}
+              >
+                Start Exploring
+              </Button>
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<Info />}
+                onClick={() => navigate('/algorithm-explorer')}
+                sx={{
+                  borderColor: 'white',
+                  color: 'white',
+                  '&:hover': {
+                    borderColor: 'white',
+                    backgroundColor: 'rgba(255,255,255,0.1)',
+                  },
+                }}
+              >
+                Learn More
+              </Button>
+            </Box>
+          </Fade>
+        </Box>
+      </HeroSection>
 
-      {/* Features Grid */}
-      <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
-        Explore the Application
-      </Typography>
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        {features.map((feature) => (
-          <Grid item xs={12} md={6} key={feature.title}>
-            <Card 
-              className="card-hover"
-              sx={{ 
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-            >
-              <CardActionArea onClick={() => navigate(feature.path)} sx={{ flexGrow: 1 }}>
-                <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
-                  <Box 
-                    sx={{ 
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 60,
-                      height: 60,
-                      borderRadius: '50%',
-                      backgroundColor: feature.color,
-                      color: 'white',
-                      mb: 2
-                    }}
-                  >
-                    {feature.icon}
-                  </Box>
-                </Box>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div" align="center">
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" align="center">
-                    {feature.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Box sx={{ mb: 6 }}>
+        <Typography variant="h4" gutterBottom fontWeight="bold">
+          Choose Your Algorithm
+        </Typography>
+        <Grid container spacing={3}>
+          {algorithms.map((algo, index) => (
+            <Grid item xs={12} md={4} key={algo.name}>
+              <Grow in timeout={1000 + index * 200}>
+                <AlgorithmCard
+                  onClick={() => setSelectedAlgorithm(algo.name)}
+                  sx={{
+                    borderTop: `4px solid ${algo.color}`,
+                    backgroundColor: selectedAlgorithm === algo.name ? 'action.selected' : 'background.paper',
+                  }}
+                >
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+                      <Typography
+                        variant="h3"
+                        className="algorithm-icon"
+                        sx={{ fontSize: '3rem' }}
+                      >
+                        {algo.icon}
+                      </Typography>
+                      <IconButton size="small">
+                        <Star sx={{ color: selectedAlgorithm === algo.name ? 'warning.main' : 'action.disabled' }} />
+                      </IconButton>
+                    </Box>
+                    <Typography variant="h5" gutterBottom fontWeight="bold">
+                      {algo.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                      {algo.description}
+                    </Typography>
+                    <Box sx={{ mb: 2 }}>
+                      {algo.features.map((feature) => (
+                        <Chip
+                          key={feature}
+                          label={feature}
+                          size="small"
+                          sx={{ mr: 0.5, mb: 0.5 }}
+                        />
+                      ))}
+                    </Box>
+                    <Box sx={{ mt: 2 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                        <Typography variant="body2">Performance</Typography>
+                        <Typography variant="body2" fontWeight="bold">
+                          {algo.performance}%
+                        </Typography>
+                      </Box>
+                      <LinearProgress
+                        variant="determinate"
+                        value={algo.performance}
+                        sx={{
+                          height: 8,
+                          borderRadius: 4,
+                          backgroundColor: 'action.hover',
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: algo.color,
+                          },
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </AlgorithmCard>
+              </Grow>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
-      {/* Algorithm Overview */}
-      <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
-        Gradient Boosting Algorithms
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Card className="algorithm-card">
-            <CardMedia
-              component="img"
-              height="140"
-              image={process.env.PUBLIC_URL + '/xgboost.png'}
-              alt="XGBoost"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                XGBoost
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                XGBoost (eXtreme Gradient Boosting) is known for its speed and performance. It uses second-order gradients and has built-in regularization to prevent overfitting.
-              </Typography>
-              <Button 
-                sx={{ mt: 2 }}
-                size="small" 
-                onClick={() => navigate('/algorithms?algorithm=xgboost')}
-              >
-                Learn more
-              </Button>
-            </CardContent>
-          </Card>
+      <Box sx={{ mb: 6 }}>
+        <Typography variant="h4" gutterBottom fontWeight="bold">
+          Explore Features
+        </Typography>
+        <Grid container spacing={3}>
+          {features.map((feature, index) => (
+            <Grid item xs={12} sm={6} md={3} key={feature.title}>
+              <Grow in timeout={1500 + index * 100}>
+                <FeatureCard onClick={() => navigate(feature.path)}>
+                  <CardContent sx={{ textAlign: 'center', py: 4 }}>
+                    <Box
+                      sx={{
+                        display: 'inline-flex',
+                        p: 2,
+                        borderRadius: '50%',
+                        backgroundColor: `${feature.color}.light`,
+                        color: `${feature.color}.main`,
+                        mb: 2,
+                      }}
+                    >
+                      {feature.icon}
+                    </Box>
+                    <Typography variant="h6" gutterBottom>
+                      {feature.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {feature.description}
+                    </Typography>
+                  </CardContent>
+                </FeatureCard>
+              </Grow>
+            </Grid>
+          ))}
         </Grid>
-        
-        <Grid item xs={12} md={4}>
-          <Card className="algorithm-card">
-            <CardMedia
-              component="img"
-              height="140"
-              image={process.env.PUBLIC_URL + '/histboost.png'}
-              alt="LightGBM"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                LightGBM
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                LightGBM is designed for distributed and efficient training with large datasets. It uses histogram-based algorithms and grows trees leaf-wise rather than level-wise.
-              </Typography>
-              <Button 
-                sx={{ mt: 2 }}
-                size="small" 
-                onClick={() => navigate('/algorithms?algorithm=lightgbm')}
-              >
-                Learn more
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        <Grid item xs={12} md={4}>
-          <Card className="algorithm-card">
-            <CardMedia
-              component="img"
-              height="140"
-              image={process.env.PUBLIC_URL + '/catboost.png'}
-              alt="CatBoost"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                CatBoost
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                CatBoost is designed to handle categorical features automatically. It uses ordered boosting and innovative methods to handle categorical variables without preprocessing.
-              </Typography>
-              <Button 
-                sx={{ mt: 2 }}
-                size="small" 
-                onClick={() => navigate('/algorithms?algorithm=catboost')}
-              >
-                Learn more
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+
+      <Box sx={{ textAlign: 'center', py: 4 }}>
+        <Typography variant="body2" color="text.secondary">
+          Built with React, Material-UI, and D3.js
+        </Typography>
+        <Box sx={{ mt: 2 }}>
+          <StatsChip icon={<Star />} label="Open Source" sx={{ mr: 1 }} />
+          <StatsChip icon={<GitHub />} label="View on GitHub" />
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
