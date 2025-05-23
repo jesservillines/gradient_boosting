@@ -112,7 +112,7 @@ const Dashboard = () => {
     {
       name: 'XGBoost',
       description: 'Extreme Gradient Boosting with regularization',
-      icon: '🚀',
+      image: '/xgboost.png',
       color: '#FF6B6B',
       features: ['L1/L2 Regularization', 'Parallel Processing', 'Tree Pruning'],
       performance: 92,
@@ -120,7 +120,7 @@ const Dashboard = () => {
     {
       name: 'LightGBM',
       description: 'Fast gradient boosting with leaf-wise growth',
-      icon: '⚡',
+      image: '/histboost.png',
       color: '#45B7D1',
       features: ['Histogram-based', 'GPU Support', 'Categorical Features'],
       performance: 95,
@@ -128,7 +128,7 @@ const Dashboard = () => {
     {
       name: 'CatBoost',
       description: 'Handles categorical features automatically',
-      icon: '🐱',
+      image: '/catboost.png',
       color: '#BB8FCE',
       features: ['Ordered Boosting', 'GPU Training', 'Symmetric Trees'],
       performance: 90,
@@ -176,16 +176,44 @@ const Dashboard = () => {
       </Helmet>
       <HeroSection>
         <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-          <Fade in timeout={1000}>
-            <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
-              Gradient Boosting Visualizer
-            </Typography>
-          </Fade>
-          <Fade in timeout={1500}>
-            <Typography variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
-              Master the art of ensemble learning through interactive visualizations
-            </Typography>
-          </Fade>
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Fade in timeout={1000}>
+                <Box>
+                  <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
+                    Gradient Boosting Visualizer
+                  </Typography>
+                  <Typography variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
+                    Master the art of ensemble learning through interactive visualizations
+                  </Typography>
+                </Box>
+              </Fade>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Fade in timeout={1500}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'center',
+                  p: 2,
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  boxShadow: 3,
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  backdropFilter: 'blur(5px)'
+                }}>
+                  <img 
+                    src="/gradient_boost_hero.png" 
+                    alt="Gradient Boosting Visualization" 
+                    style={{ 
+                      maxWidth: '100%', 
+                      height: 'auto',
+                      borderRadius: '8px',
+                    }} 
+                  />
+                </Box>
+              </Fade>
+            </Grid>
+          </Grid>
           <Fade in timeout={2000}>
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
               <Button
@@ -240,14 +268,27 @@ const Dashboard = () => {
                   }}
                 >
                   <CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                      <Typography
-                        variant="h3"
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2, alignItems: 'flex-start' }}>
+                      <Box 
                         className="algorithm-icon"
-                        sx={{ fontSize: '3rem' }}
+                        sx={{ 
+                          width: '100px',
+                          height: '100px',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          mb: 1
+                        }}
                       >
-                        {algo.icon}
-                      </Typography>
+                        <img 
+                          src={algo.image} 
+                          alt={`${algo.name} algorithm`}
+                          style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'cover' 
+                          }}
+                        />
+                      </Box>
                       <IconButton size="small">
                         <Star sx={{ color: selectedAlgorithm === algo.name ? 'warning.main' : 'action.disabled' }} />
                       </IconButton>
