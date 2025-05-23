@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
 import usePageView from './hooks/usePageView';
+import { initGA } from './services/analytics';
 
 // Layout components
 import Navbar from './components/Navbar';
@@ -24,6 +25,11 @@ function App() {
   usePageView();
   const darkMode = useSelector((state) => state.ui.darkMode);
   const sidebarOpen = useSelector((state) => state.ui.sidebarOpen);
+
+  // Initialize Google Analytics
+  useEffect(() => {
+    initGA();
+  }, []);
 
   // Memoize theme to avoid recreation on every render
   const theme = useMemo(

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { trackEvent } from '../services/analytics';
 import { useLocation } from 'react-router-dom';
 import {
   Box,
@@ -305,6 +306,8 @@ const AlgorithmExplorer = () => {
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
+    // Track algorithm selection event
+    trackEvent('Algorithm Explorer', 'Algorithm Selected', newValue);
   };
 
   const currentAlgorithm = algorithmInfo[selectedTab];

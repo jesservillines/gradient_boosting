@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { trackEvent } from '../services/analytics';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -140,7 +141,7 @@ const Dashboard = () => {
       title: 'Algorithm Explorer',
       icon: <Psychology fontSize="large" />,
       description: 'Deep dive into gradient boosting algorithms',
-      path: '/algorithm-explorer',
+      path: '/algorithms',
       color: 'primary',
     },
     {
@@ -154,7 +155,7 @@ const Dashboard = () => {
       title: 'Hyperparameter Tuning',
       icon: <Speed fontSize="large" />,
       description: 'Optimize model performance with interactive tuning',
-      path: '/hyperparameter-tuning',
+      path: '/hyperparameters',
       color: 'success',
     },
     {
@@ -220,7 +221,10 @@ const Dashboard = () => {
                 variant="contained"
                 size="large"
                 startIcon={<PlayArrow />}
-                onClick={() => navigate('/visualization')}
+                onClick={() => {
+                  trackEvent('Dashboard', 'Button Click', 'Start Exploring');
+                  navigate('/visualization');
+                }}
                 sx={{
                   backgroundColor: 'white',
                   color: 'primary.main',
@@ -235,7 +239,10 @@ const Dashboard = () => {
                 variant="outlined"
                 size="large"
                 startIcon={<Info />}
-                onClick={() => navigate('/documentation')}
+                onClick={() => {
+                  trackEvent('Dashboard', 'Button Click', 'Learn More');
+                  navigate('/documentation');
+                }}
                 sx={{
                   borderColor: 'white',
                   color: 'white',
@@ -261,7 +268,10 @@ const Dashboard = () => {
             <Grid item xs={12} md={4} key={algo.name}>
               <Grow in timeout={1000 + index * 200}>
                 <AlgorithmCard
-                  onClick={() => setSelectedAlgorithm(algo.name)}
+                  onClick={() => {
+                    setSelectedAlgorithm(algo.name);
+                    trackEvent('Dashboard', 'Algorithm Card Click', algo.name);
+                  }}
                   sx={{
                     borderTop: `4px solid ${algo.color}`,
                     backgroundColor: selectedAlgorithm === algo.name ? 'action.selected' : 'background.paper',
@@ -345,7 +355,10 @@ const Dashboard = () => {
           {features.map((feature, index) => (
             <Grid item xs={12} sm={6} md={3} key={feature.title}>
               <Grow in timeout={1500 + index * 100}>
-                <FeatureCard onClick={() => navigate(feature.path)}>
+                <FeatureCard onClick={() => {
+                  trackEvent('Dashboard', 'Feature Card Click', feature.title);
+                  navigate(feature.path);
+                }}>
                   <CardContent sx={{ textAlign: 'center', py: 4 }}>
                     <Box
                       sx={{
@@ -379,7 +392,15 @@ const Dashboard = () => {
         </Typography>
         <Box sx={{ mt: 2 }}>
           <StatsChip icon={<Star />} label="Open Source" sx={{ mr: 1 }} />
-          <StatsChip icon={<GitHub />} label="View on GitHub" />
+          <StatsChip 
+            icon={<GitHub />} 
+            label="View on GitHub" 
+            onClick={() => {
+              trackEvent('Dashboard', 'GitHub Link Click', 'View on GitHub');
+              window.open('https://github.com/jesservillines/gradient_boosting', '_blank', 'noopener,noreferrer');
+            }}
+            sx={{ cursor: 'pointer' }}
+          />
         </Box>
       </Box>
     </Box>
