@@ -5,8 +5,10 @@ import { styled } from '@mui/material/styles';
 const TreeContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   height: '100%',
+  minHeight: 600,
   display: 'flex',
   flexDirection: 'column',
+  overflow: 'hidden',
 }));
 
 const TreeVisualization = ({ algorithm = 'xgboost', treeIndex = 0, showValues: initialShowValues = true }) => {
@@ -49,8 +51,12 @@ const TreeVisualization = ({ algorithm = 'xgboost', treeIndex = 0, showValues: i
     if (!svgRef.current) return;
 
     const svg = svgRef.current;
-    const width = svg.clientWidth;
-    const height = svg.clientHeight;
+    const container = svg.parentElement;
+    const width = container.clientWidth || 800;
+    const height = container.clientHeight || 500;
+    
+    // Set viewBox dynamically based on container size
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
     
     // Clear previous content
     svg.innerHTML = '';
@@ -64,22 +70,33 @@ const TreeVisualization = ({ algorithm = 'xgboost', treeIndex = 0, showValues: i
 
     const currentColors = colors[algorithm] || colors.xgboost;
 
-    // Calculate positions
+    // Calculate positions with responsive sizing
     const nodePositions = {};
-    const nodeRadius = 30;
-    const levelHeight = height / (treeDepth + 1);
+    const nodeRadius = Math.min(25, Math.min(width, height) / 25); // Responsive node radius
+    const verticalPadding = nodeRadius + 20;
+    const horizontalPadding = nodeRadius * 2;
+    const levelHeight = (height - verticalPadding * 2) / (treeDepth + 1);
+    
+    // Calculate maximum spread based on tree depth to ensure all nodes fit
+    const maxNodesAtDepth = Math.pow(2, treeDepth - 1);
+    const minNodeSpacing = nodeRadius * 3;
+    const availableWidth = width - horizontalPadding * 2;
+    const maxSpread = Math.min(
+      availableWidth / 3,
+      (availableWidth - minNodeSpacing) / Math.max(2, maxNodesAtDepth / 2)
+    );
 
     const calculatePositions = (node, x, y, spread) => {
       nodePositions[node.id] = { x, y, node };
 
       if (!node.isLeaf) {
-        const childSpread = spread / 2;
-        calculatePositions(node.left, x - spread, y + levelHeight, childSpread);
-        calculatePositions(node.right, x + spread, y + levelHeight, childSpread);
+        const childSpread = spread * 0.7; // Reduce spread more gradually
+        calculatePositions(node.left, x - childSpread, y + levelHeight, childSpread);
+        calculatePositions(node.right, x + childSpread, y + levelHeight, childSpread);
       }
     };
 
-    calculatePositions(treeData, width / 2, 50, width / 4);
+    calculatePositions(treeData, width / 2, verticalPadding, maxSpread);
 
     // Create SVG elements
     const ns = 'http://www.w3.org/2000/svg';
@@ -146,7 +163,7 @@ const TreeVisualization = ({ algorithm = 'xgboost', treeIndex = 0, showValues: i
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('dy', '0.3em');
         text.setAttribute('fill', 'white');
-        text.setAttribute('font-size', '12');
+        text.setAttribute('font-size', Math.max(10, nodeRadius / 2.5));
         text.setAttribute('font-weight', 'bold');
 
         if (node.isLeaf) {
@@ -163,7 +180,7 @@ const TreeVisualization = ({ algorithm = 'xgboost', treeIndex = 0, showValues: i
           splitText.setAttribute('text-anchor', 'middle');
           splitText.setAttribute('dy', '1.5em');
           splitText.setAttribute('fill', 'white');
-          splitText.setAttribute('font-size', '10');
+          splitText.setAttribute('font-size', Math.max(8, nodeRadius / 3));
           splitText.textContent = `< ${node.splitValue}`;
           g.appendChild(splitText);
         }
@@ -219,7 +236,7 @@ const TreeVisualization = ({ algorithm = 'xgboost', treeIndex = 0, showValues: i
         />
       </Box>
 
-      <Box sx={{ flex: 1, position: 'relative', minHeight: 400 }}>
+      <Box sx={{ flex: 1, position: 'relative', minHeight: 400, height: '100%' }}>
         <svg
           ref={svgRef}
           style={{
@@ -228,6 +245,7 @@ const TreeVisualization = ({ algorithm = 'xgboost', treeIndex = 0, showValues: i
             backgroundColor: '#f5f5f5',
             borderRadius: '8px',
           }}
+          preserveAspectRatio="xMidYMid meet"
         />
       </Box>
 

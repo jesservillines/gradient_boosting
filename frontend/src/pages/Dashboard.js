@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Container,
   Grid,
   Card,
   CardContent,
@@ -167,7 +166,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <Container maxWidth="lg">
+    <Box sx={{ width: '100%', mx: 0 }}>
       <HeroSection>
         <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <Fade in timeout={1000}>
@@ -335,7 +334,7 @@ const Dashboard = () => {
           <StatsChip icon={<GitHub />} label="View on GitHub" />
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

@@ -159,7 +159,7 @@ const VisualizationPlayground = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ width: '100%', mx: 0 }}>
       <Typography variant="h4" gutterBottom>
         Visualization Playground
       </Typography>
