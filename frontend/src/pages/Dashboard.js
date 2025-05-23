@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import {
   Grid,
   Card,
@@ -167,6 +168,12 @@ const Dashboard = () => {
 
   return (
     <Box sx={{ width: '100%', mx: 0 }}>
+      <Helmet>
+        <title>Gradient Boosting Visualization - Learn XGBoost, LightGBM & CatBoost Interactively</title>
+        <meta name="description" content="Master gradient boosting algorithms with our interactive visualization tool. Understand XGBoost, LightGBM, and CatBoost through hands-on experiments and real-time comparisons." />
+        <meta name="keywords" content="gradient boosting, machine learning visualization, XGBoost tutorial, LightGBM guide, CatBoost learning, interactive ML education" />
+        <link rel="canonical" href="https://gradient-boosting-visualizer.netlify.app/" />
+      </Helmet>
       <HeroSection>
         <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <Fade in timeout={1000}>

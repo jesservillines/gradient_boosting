@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import {
   Box,
   Typography,
@@ -160,6 +161,15 @@ const VisualizationPlayground = () => {
 
   return (
     <Box sx={{ width: '100%', mx: 0 }}>
+      <Helmet>
+        <title>Interactive Gradient Boosting Visualization - XGBoost, LightGBM, CatBoost</title>
+        <meta name="description" content="Explore gradient boosting algorithms through interactive visualizations. Compare XGBoost, LightGBM, and CatBoost performance in real-time with customizable parameters." />
+        <meta name="keywords" content="gradient boosting visualization, XGBoost interactive, LightGBM visualization, CatBoost demo, ML visualization playground" />
+        <meta property="og:title" content="Interactive Gradient Boosting Visualization Playground" />
+        <meta property="og:description" content="Hands-on exploration of gradient boosting algorithms with real-time visualizations and parameter tuning." />
+        <meta property="og:url" content="https://gradient-boosting-visualizer.netlify.app/visualization" />
+      </Helmet>
+      
       <Typography variant="h4" gutterBottom>
         Visualization Playground
       </Typography>

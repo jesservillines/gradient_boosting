@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Layout components
 import Navbar from './components/Navbar';
@@ -48,33 +49,35 @@ function App() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box sx={{ display: 'flex' }}>
-        <Navbar />
-        <Sidebar />
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: { xs: 1.5, sm: 2 },
-            mt: '64px',
-            transition: 'padding 0.3s ease',
-            width: '100%',
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/algorithms" element={<AlgorithmExplorer />} />
-            <Route path="/visualization" element={<VisualizationPlayground />} />
-            <Route path="/hyperparameters" element={<HyperparameterTuning />} />
-            <Route path="/comparison" element={<ComparisonPage />} />
-            <Route path="/documentation" element={<Documentation />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box sx={{ display: 'flex' }}>
+          <Navbar />
+          <Sidebar />
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: { xs: 1.5, sm: 2 },
+              mt: '64px',
+              transition: 'padding 0.3s ease',
+              width: '100%',
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/algorithms" element={<AlgorithmExplorer />} />
+              <Route path="/visualization" element={<VisualizationPlayground />} />
+              <Route path="/hyperparameters" element={<HyperparameterTuning />} />
+              <Route path="/comparison" element={<ComparisonPage />} />
+              <Route path="/documentation" element={<Documentation />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 

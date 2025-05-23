@@ -1,0 +1,26 @@
+# Gradient Boosting Visualization - robots.txt
+# Allow all web crawlers
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://gradient-boosting-visualizer.netlify.app/sitemap.xml
+
+# Crawl-delay (in seconds) - optional, remove if not needed
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Block access to any potential admin or API routes (if they exist)
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /.netlify/
